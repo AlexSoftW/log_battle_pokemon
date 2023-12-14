@@ -13,36 +13,54 @@ class Pokemon(
     var stage: Int
 ) {
 
-    fun atacar(ataqueBasico: String): Double {
+    private var atkBasicOrSpecial: Boolean = false
+
+    fun atacar(): Double {
+        val chanceDeUsarAtkEspecial = Random.nextInt(1, 11)
+
+        return if (chanceDeUsarAtkEspecial in 1..8) {
+            ataqueBasico()
+        } else {
+            ataqueEspecial()
+        }
+    }
+
+    fun defender(): Int {
+        return ((Random.nextInt(1, 11)) * this.def) / 10
+    }
+
+    fun sofrerDano(dano: Double) {
+        this.hp -= dano
+    }
+
+    fun ataqueBasico(): Double {
+        val poder = this.power * 0.10
         val velocidade: Int = when (this.stage) {
             1 -> vel / 10
             2 -> vel / 8
             3 -> vel / 6
             else -> 0
         }
-        val poder = this.power * 0.10
+        atkBasicOrSpecial = false
 
-        return (basicAtk[ataqueBasico]!! + poder + velocidade)
+        return (basicAtk[this.basicAtk.keys.first()]!! + poder + velocidade)
     }
 
-    fun ataqueEspecial(ataqueEspecial: String): Double {
+    fun ataqueEspecial(): Double {
+        val poder = this.power * 0.20
         val velocidade: Int = when (this.stage) {
             1 -> vel / 6
             2 -> vel / 4
             3 -> vel / 2
             else -> 0
         }
-        val poder = this.power * 0.20
+        atkBasicOrSpecial = true
 
-        return (specialAtk[ataqueEspecial]!! + poder + velocidade)
+        return (specialAtk[this.specialAtk.keys.first()]!! + poder + velocidade)
     }
 
-    fun defender(): Int {
-        return (porcetagemSucessoDef() * this.def) / 10
-    }
-
-    fun sofrerDano(dano: Double) {
-        this.hp -= dano
+    fun nameTagAtaquePokemon(): String {
+        return if (!atkBasicOrSpecial) this.basicAtk.keys.first() else this.specialAtk.keys.first()
     }
 
     fun evoluir(
@@ -66,10 +84,6 @@ class Pokemon(
             this.specialAtk = ataqueEspecial
             this.stage++
         }
-    }
-
-    fun porcetagemSucessoDef(): Int {
-        return Random.nextInt(1, 11)
     }
 
 }

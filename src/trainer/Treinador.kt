@@ -10,14 +10,6 @@ class Treinador(
     private var equipe: MutableList<Pokemon> = mutableListOf()
 ) {
 
-    fun vitoria() {
-        this.qtdWin++
-    }
-
-    fun derrota() {
-        this.qtdLose++
-    }
-
     fun escolherPokemon(): Pokemon {
         val qtdDePokemonNaEquipe = this.equipe.size
         if (qtdDePokemonNaEquipe == 1) {
@@ -32,8 +24,12 @@ class Treinador(
         this.equipe.add(pokemon)
     }
 
-    fun equipePokemon(): List<Pokemon> {
-        return this.equipe
+    fun vitoria(){
+        this.qtdWin++
+    }
+
+    fun derrota() {
+        this.qtdLose++
     }
 
 }

@@ -17,116 +17,103 @@ class Arena(
         locutor(pokemonLiderDoGinasio, pokemonTreinadorDesafiante)
 
         while (pokemonLiderDoGinasio.hp > 0.0 && pokemonTreinadorDesafiante.hp > 0.0) {
-            println(
-                "---------------------------\n" +
-                        "|${pokemonLiderDoGinasio.name} HP: ${pokemonLiderDoGinasio.hp}|\n" +
-                        "|${pokemonTreinadorDesafiante.name} HP: ${pokemonTreinadorDesafiante.hp}|\n" +
-                        "___________________________"
-            )
+            placar(pokemonLiderDoGinasio, pokemonTreinadorDesafiante)
             Thread.sleep(5000)
 
             if (escolherTreinadorParaAtacar() in 1..6) {
-                //Pokemon do lider de ginasio ataca.
-                if (chanceAtkEspecialPokemon() in 8..11) {
-                    val ataqueEspecial =
-                        pokemonLiderDoGinasio.ataqueEspecial(pokemonLiderDoGinasio.specialAtk.keys.first())
-                    println(
-                        "${pokemonLiderDoGinasio.name} usou ${pokemonLiderDoGinasio.specialAtk.keys.first()} | " +
-                                "Dano = $ataqueEspecial"
-                    )
-                    Thread.sleep(3000)
+                //Pokémon do lider de ginásio ataca.
+                val atacar = pokemonLiderDoGinasio.atacar()
+                println(
+                    "${pokemonLiderDoGinasio.name} usou " +
+                            "${pokemonLiderDoGinasio.nameTagAtaquePokemon()} | " +
+                            "Dano = $atacar"
+                )
+                Thread.sleep(3000)
 
-                    //Pokemon do treinador desafiante defende.
-                    val defender = pokemonTreinadorDesafiante.defender()
-                    println("${pokemonTreinadorDesafiante.name} defendeu | Defesa = $defender")
-                    Thread.sleep(3000)
+                //Pokémon do treinador desafiante defende.
+                val defender = pokemonTreinadorDesafiante.defender()
+                println("${pokemonTreinadorDesafiante.name} defendeu | Defesa = $defender")
+                Thread.sleep(3000)
 
-                    //Vida do pokemon do treinador desafiante
-                    pokemonTreinadorDesafiante.sofrerDano(ataqueEspecial - defender)
-                    println("${pokemonTreinadorDesafiante.name} perdeu ${ataqueEspecial - defender} HP")
-                    Thread.sleep(3000)
-
-                } else {
-                    val ataqueBasico = pokemonLiderDoGinasio.atacar(pokemonLiderDoGinasio.basicAtk.keys.first())
-                    println(
-                        "${pokemonLiderDoGinasio.name} usou ${pokemonLiderDoGinasio.basicAtk.keys.first()} | " +
-                                "Dano = $ataqueBasico"
-                    )
-                    Thread.sleep(3000)
-
-                    //Pokemon do treianador desafiante defende.
-                    val defender = pokemonTreinadorDesafiante.defender()
-                    println("${pokemonTreinadorDesafiante.name} defendeu | Defesa = $defender")
-                    Thread.sleep(3000)
-
-                    //Vida do pokemon do treinador desafiante.
-                    pokemonTreinadorDesafiante.sofrerDano(ataqueBasico - defender)
-                    println("${pokemonTreinadorDesafiante.name} perdeu ${ataqueBasico - defender} HP")
-                    Thread.sleep(3000)
-                }
-
+                //Vida atual do Pokémon do treinador desafiante.
+                pokemonTreinadorDesafiante.sofrerDano(atacar - defender)
+                println("${pokemonTreinadorDesafiante.name} perdeu ${atacar - defender} HP")
+                Thread.sleep(3000)
             } else {
-                //Pokemon do treinador desafiante ataca.
-                if (chanceAtkEspecialPokemon() in 8..11) {
-                    val ataqueEspecial =
-                        pokemonTreinadorDesafiante.ataqueEspecial(pokemonTreinadorDesafiante.specialAtk.keys.first())
-                    println(
-                        "${pokemonTreinadorDesafiante.name} usou ${pokemonTreinadorDesafiante.specialAtk.keys.first()} | " +
-                                "Dano = ${pokemonTreinadorDesafiante.ataqueEspecial(pokemonTreinadorDesafiante.specialAtk.keys.first())}"
-                    )
-                    Thread.sleep(3000)
+                //Pokémon do treinador desafiante ataca.
+                val atacar = pokemonTreinadorDesafiante.atacar()
+                println(
+                    "${pokemonTreinadorDesafiante.name} usou " +
+                            "${pokemonTreinadorDesafiante.nameTagAtaquePokemon()} | " +
+                            "Dano = $atacar"
+                )
+                Thread.sleep(3000)
 
-                    //Pokemon do lider de ginasio defende.
-                    val defender = pokemonLiderDoGinasio.defender()
-                    println("${pokemonLiderDoGinasio.name} defendeu | Defesa = $defender")
-                    Thread.sleep(3000)
+                //Pokémon do lider de ginásio defende.
+                val defender = pokemonLiderDoGinasio.defender()
+                println("${pokemonLiderDoGinasio.name} defendeu | Defesa = $defender")
+                Thread.sleep(3000)
 
-                    //Vida do pokemon do lider de ginasio.
-                    pokemonLiderDoGinasio.sofrerDano(ataqueEspecial - defender)
-                    println("${pokemonLiderDoGinasio.name} perdeu ${ataqueEspecial - defender} HP")
-                    Thread.sleep(3000)
-                } else {
-                    val ataqueBasico =
-                        pokemonTreinadorDesafiante.atacar(pokemonTreinadorDesafiante.basicAtk.keys.first())
-                    println(
-                        "${pokemonTreinadorDesafiante.name} usou ${pokemonTreinadorDesafiante.basicAtk.keys.first()} | " +
-                                "Dano = $ataqueBasico"
-                    )
-                    Thread.sleep(3000)
-
-                    //Pokemon do lider de ginasio defende.
-                    val defender = pokemonLiderDoGinasio.defender()
-                    println("${pokemonLiderDoGinasio.name} defendeu | Defesa = $defender")
-                    Thread.sleep(3000)
-
-                    //Vida do pokemon do lider de ginasio.
-                    pokemonLiderDoGinasio.sofrerDano(ataqueBasico - defender)
-                    println("${pokemonLiderDoGinasio.name} perdeu ${ataqueBasico - defender} HP")
-                    Thread.sleep(3000)
-                }
+                //Vida atual do Pokémon do lider de ginásio.
+                pokemonLiderDoGinasio.sofrerDano(atacar - defender)
+                println("${pokemonLiderDoGinasio.name} perdeu ${atacar - defender} HP")
+                Thread.sleep(3000)
             }
-
-
         }
 
-        if (pokemonTreinadorDesafiante.hp == 0.0) {
-            println("treinador desafiante perdeu")
-        } else if (pokemonLiderDoGinasio.hp == 0.0) {
-            println("lider de ginasio perdeu")
+        finalDaPartida(pokemonLiderDoGinasio, pokemonTreinadorDesafiante)
+    }
+
+    private fun finalDaPartida(pokemonLiderDoGinasio: Pokemon, pokemonTreinadorDesafiante: Pokemon) {
+        println(
+            "\n_________________" +
+                    "Partida encerrada!" +
+                    "___________________\n"
+        )
+        Thread.sleep(3000)
+
+        if (pokemonTreinadorDesafiante.hp <= 0.0) {
+            liderDoGinasio.derrota()
+            treinadorDesafiante.vitoria()
+            println("O treinador ${liderDoGinasio.name} perdeu a partida!")
+            println("O treinador ${treinadorDesafiante.name} ganhou a partida!")
+        } else {
+            liderDoGinasio.vitoria()
+            treinadorDesafiante.derrota()
+            println("O treinador ${liderDoGinasio.name} ganhou a partida!")
+            println("O treinador ${treinadorDesafiante.name} perdeu a partida!")
         }
-
+        println(
+            "\n⠸⣷⣦⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⠀⠀⠀\n" +
+                    "⠀⠙⣿⡄⠈⠑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠔⠊⠉⣿⡿⠁⠀⠀⠀\n" +
+                    "⠀⠀⠈⠣⡀⠀⠀⠑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠊⠁⠀⠀⣰⠟⠀⠀⠀⣀⣀\n" +
+                    "⠀⠀⠀⠀⠈⠢⣄⠀⡈⠒⠊⠉⠁⠀⠈⠉⠑⠚⠀⠀⣀⠔⢊⣠⠤⠒⠊⠉⠀⡜\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⡽⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠩⡔⠊⠁⠀⠀⠀⠀⠀⠀⠇\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⡇⢠⡤⢄⠀⠀⠀⠀⠀⡠⢤⣄⠀⡇⠀⠀⠀⠀⠀⠀⠀⢰⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⢀⠇⠹⠿⠟⠀⠀⠤⠀⠀⠻⠿⠟⠀⣇⠀⠀⡀⠠⠄⠒⠊⠁⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⢸⣿⣿⡆⠀⠰⠤⠖⠦⠴⠀⢀⣶⣿⣿⠀⠙⢄⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⢻⣿⠃⠀⠀⠀⠀⠀⠀⠀⠈⠿⡿⠛⢄⠀⠀⠱⣄⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⠀⢸⠈⠓⠦⠀⣀⣀⣀⠀⡠⠴⠊⠹⡞⣁⠤⠒⠉⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠀⣠⠃⠀⠀⠀⠀⡌⠉⠉⡤⠀⠀⠀⠀⢻⠿⠆⠀⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠰⠁⡀⠀⠀⠀⠀⢸⠀⢰⠃⠀⠀⠀⢠⠀⢣⠀⠀⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⢶⣗⠧⡀⢳⠀⠀⠀⠀⢸⣀⣸⠀⠀⠀⢀⡜⠀⣸⢤⣶⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠈⠻⣿⣦⣈⣧⡀⠀⠀⢸⣿⣿⠀⠀⢀⣼⡀⣨⣿⡿⠁⠀⠀⠀⠀⠀⠀\n" +
+                    "⠀⠀⠀⠀⠀⠈⠻⠿⠿⠓⠄⠤⠘⠉⠙⠤⢀⠾⠿⣿⠟⠋"
+        )
     }
 
-    fun escolherTreinadorParaAtacar(): Int {
-        return Random.nextInt(1, 11)
+    private fun placar(pokemonLiderDoGinasio: Pokemon, pokemonTreinadorDesafiante: Pokemon) {
+        println(
+            "\n---Vida atual---------------\n" +
+                    "|${pokemonLiderDoGinasio.name} HP: " +
+                    "${pokemonLiderDoGinasio.hp}|\n" +
+                    "|${pokemonTreinadorDesafiante.name} HP: " +
+                    "${pokemonTreinadorDesafiante.hp}|\n" +
+                    "___________________________"
+        )
     }
 
-    fun chanceAtkEspecialPokemon(): Int {
-        return Random.nextInt(1, 11)
-    }
-
-    fun locutor(pokemonDesafiante: Pokemon, pokemonLider: Pokemon) {
-
+    private fun locutor(pokemonTreinadorDesafiante: Pokemon, pokemonLiderDoGinasio: Pokemon) {
         println(
             "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣿⣿⣿⣿⣿⣿⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -154,7 +141,7 @@ class Arena(
         println(
             "Nesse grande dia ensolarado que está fazendo hoje no ${this.name}, " +
                     "do dia ${dataHoraAtual()}, temos a ilustre estrela do nosso torneio\n" +
-                    "o brilhante e destemido lider de ginasio: ${liderDoGinasio.name}\n" +
+                    "o brilhante e destemido lider de ginasio ${liderDoGinasio.name}\n" +
                     "*aplausos e gritos...*"
         )
         println(
@@ -176,8 +163,9 @@ class Arena(
         )
         Thread.sleep(15000)
         println(
-            "Do outro lado temos o corajoso desafiante que irá infrentar nosso lider de ginasio para conquistar sua insignea.\n" +
-                    "Aplausos para o desafiante: ${treinadorDesafiante.name}\n" +
+            "Do outro lado temos o corajoso desafiante que irá infrentar nosso lider de ginásio " +
+                    "para conquistar sua insígnia.\n" +
+                    "Aplausos para o desafiante ${treinadorDesafiante.name}\n" +
                     "*muitos aplausos...*"
         )
         println(
@@ -203,11 +191,11 @@ class Arena(
                     "⠀⠀⠀⠀⠁\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
         )
         Thread.sleep(15000)
-        println("Os pokemon utilizados para esse combate são...")
+        println("Os Pokémon utilizados para esse combate são...")
         Thread.sleep(3000)
-        println("${pokemonLider.name} do treinador: ${this.liderDoGinasio.name}")
+        println("${pokemonLiderDoGinasio.name} do treinador: ${this.liderDoGinasio.name}")
         Thread.sleep(3000)
-        println("${pokemonDesafiante.name} do treinador: ${this.treinadorDesafiante.name}")
+        println("${pokemonTreinadorDesafiante.name} do treinador: ${this.treinadorDesafiante.name}")
         Thread.sleep(5000)
         println("Treinadores apostos...")
         Thread.sleep(3000)
@@ -235,6 +223,10 @@ class Arena(
         val minuto = dateNow.minute
 
         return "$dia/$mes/$ano às $hora:$minuto"
+    }
+
+    private fun escolherTreinadorParaAtacar(): Int {
+        return Random.nextInt(1, 11)
     }
 
 }
