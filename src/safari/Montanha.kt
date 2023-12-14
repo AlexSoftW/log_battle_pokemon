@@ -12,10 +12,6 @@ class Montanha(
 ) {
 
     fun adicionarPokemonNaFloresta() {
-        this.pokemonList = adicionarPokemon()
-    }
-
-    fun adicionarPokemon(): List<Pokemon> {
         val listPokemon = listOf(
             Pokemon(
                 "Charmander",
@@ -47,8 +43,7 @@ class Montanha(
                 1
             )
         )
-
-        return listPokemon
+        this.pokemonList = listPokemon
     }
 
     fun chanceDeCaptura(): Int {

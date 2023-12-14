@@ -12,10 +12,6 @@ class Praia(
 ) {
 
     fun adicionarPokemonNaFloresta() {
-        this.pokemonList = adicionarPokemon()
-    }
-
-    fun adicionarPokemon(): List<Pokemon> {
         val listPokemon = listOf(
             Pokemon(
                 "Squirtle",
@@ -47,8 +43,7 @@ class Praia(
                 1
             )
         )
-
-        return listPokemon
+        this.pokemonList = listPokemon
     }
 
     fun chanceDeCaptura(): Int {
